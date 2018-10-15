@@ -754,7 +754,11 @@ public final class Utils {
 
             @Override
             public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
-                Files.delete(path);
+                try {
+                    Files.delete(path);
+                } catch (IOException e) {
+                    path.toFile().deleteOnExit();
+                }
                 return FileVisitResult.CONTINUE;
             }
 
