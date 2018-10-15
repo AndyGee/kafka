@@ -758,6 +758,11 @@ public final class Utils {
                     Files.delete(path);
                 } catch (IOException e) {
                     path.toFile().deleteOnExit();
+                    if (log.isDebugEnabled()) {
+                        log.warn("Failed to delete {}", path, e);
+                    } else {
+                        log.warn("Failed to delete {} - log level debug for stacktrace", path);
+                    }
                 }
                 return FileVisitResult.CONTINUE;
             }
